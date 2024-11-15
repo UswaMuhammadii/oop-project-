@@ -1,0 +1,9 @@
+101,Foundation,25.99,file:src/main/resources/images/product1/foundation.jpg
+102,Mascara,15.99,file:src/main/resources/images/product2/mascara.jpg
+103,Lipstick,12.99,file:src/main/resources/images/product3/lipstick.jpg
+104,Highlighter,18.99,file:src/main/resources/images/product4/highlighter.jpg
+105,Moisturizer,22.99,file:src/main/resources/images/product5/moistrizer.jpg
+106,Eyeliner,10.99,file:src/main/resources/images/product6/eyeliner.jpg
+107,Nail Polish,9.99,file:src/main/resources/images/product7/nailpolish.jpg
+108,Hair Spray,14.99,file:src/main/resources/images/product8/hairspray.jpg
+109,Acne Scrub,19.99,file:src/main/resources/images/product9/scrub.jpg

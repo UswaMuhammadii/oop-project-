@@ -1,0 +1,548 @@
+<html>
+<head>
+<title>HelloApplication.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #2aacb8;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+HelloApplication.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">demo9</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">javafx</span><span class="s2">.</span><span class="s1">application</span><span class="s2">.</span><span class="s1">Application</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">javafx</span><span class="s2">.</span><span class="s1">geometry</span><span class="s2">.</span><span class="s1">Insets</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">javafx</span><span class="s2">.</span><span class="s1">geometry</span><span class="s2">.</span><span class="s1">Pos</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">javafx</span><span class="s2">.</span><span class="s1">scene</span><span class="s2">.</span><span class="s1">Scene</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">javafx</span><span class="s2">.</span><span class="s1">scene</span><span class="s2">.</span><span class="s1">control</span><span class="s2">.*;</span>
+<span class="s0">import </span><span class="s1">javafx</span><span class="s2">.</span><span class="s1">scene</span><span class="s2">.</span><span class="s1">image</span><span class="s2">.</span><span class="s1">Image</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">javafx</span><span class="s2">.</span><span class="s1">scene</span><span class="s2">.</span><span class="s1">image</span><span class="s2">.</span><span class="s1">ImageView</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">javafx</span><span class="s2">.</span><span class="s1">scene</span><span class="s2">.</span><span class="s1">layout</span><span class="s2">.*;</span>
+<span class="s0">import </span><span class="s1">javafx</span><span class="s2">.</span><span class="s1">scene</span><span class="s2">.</span><span class="s1">paint</span><span class="s2">.</span><span class="s1">Color</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">javafx</span><span class="s2">.</span><span class="s1">scene</span><span class="s2">.</span><span class="s1">text</span><span class="s2">.</span><span class="s1">Font</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">javafx</span><span class="s2">.</span><span class="s1">scene</span><span class="s2">.</span><span class="s1">text</span><span class="s2">.</span><span class="s1">FontWeight</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">javafx</span><span class="s2">.</span><span class="s1">stage</span><span class="s2">.</span><span class="s1">Stage</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">io</span><span class="s2">.*;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">ArrayList</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.</span><span class="s1">List</span><span class="s2">;</span>
+
+<span class="s0">public class </span><span class="s1">HelloApplication </span><span class="s0">extends </span><span class="s1">Application </span><span class="s2">{</span>
+    <span class="s0">private </span><span class="s1">String currentCustomerName</span><span class="s2">;</span>
+    <span class="s0">private </span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">Product</span><span class="s2">&gt; </span><span class="s1">products </span><span class="s2">= </span><span class="s0">new </span><span class="s1">ArrayList</span><span class="s2">&lt;&gt;();</span>
+    <span class="s0">private </span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">CartItem</span><span class="s2">&gt; </span><span class="s1">cartItems </span><span class="s2">= </span><span class="s0">new </span><span class="s1">ArrayList</span><span class="s2">&lt;&gt;();</span>
+    <span class="s0">private final </span><span class="s1">String PRODUCTS_FILE </span><span class="s2">= </span><span class="s3">&quot;products.txt&quot;</span><span class="s2">;</span>
+    <span class="s0">private final </span><span class="s1">String USERS_FILE </span><span class="s2">= </span><span class="s3">&quot;users.txt&quot;</span><span class="s2">;</span>
+    <span class="s0">private final </span><span class="s1">String DELIMITER </span><span class="s2">= </span><span class="s3">&quot;,&quot;</span><span class="s2">;</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">start</span><span class="s2">(</span><span class="s1">Stage stage</span><span class="s2">) </span><span class="s0">throws </span><span class="s1">Exception </span><span class="s2">{</span>
+        <span class="s1">loadProducts</span><span class="s2">();</span>
+        <span class="s1">showLoginPage</span><span class="s2">(</span><span class="s1">stage</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+
+    <span class="s0">private void </span><span class="s1">loadProducts</span><span class="s2">() {</span>
+        <span class="s0">try </span><span class="s2">(</span><span class="s1">BufferedReader reader </span><span class="s2">= </span><span class="s0">new </span><span class="s1">BufferedReader</span><span class="s2">(</span><span class="s0">new </span><span class="s1">FileReader</span><span class="s2">(</span><span class="s1">PRODUCTS_FILE</span><span class="s2">))) {</span>
+            <span class="s1">String line</span><span class="s2">;</span>
+            <span class="s0">while </span><span class="s2">((</span><span class="s1">line </span><span class="s2">= </span><span class="s1">reader</span><span class="s2">.</span><span class="s1">readLine</span><span class="s2">()) != </span><span class="s0">null</span><span class="s2">) {</span>
+                <span class="s1">String</span><span class="s2">[] </span><span class="s1">fields </span><span class="s2">= </span><span class="s1">line</span><span class="s2">.</span><span class="s1">split</span><span class="s2">(</span><span class="s1">DELIMITER</span><span class="s2">);</span>
+
+                <span class="s0">try </span><span class="s2">{</span>
+                    <span class="s1">String id </span><span class="s2">= </span><span class="s1">fields</span><span class="s2">[</span><span class="s4">0</span><span class="s2">];</span>
+                    <span class="s1">String name </span><span class="s2">= </span><span class="s1">fields</span><span class="s2">[</span><span class="s4">1</span><span class="s2">];</span>
+                    <span class="s0">double </span><span class="s1">price </span><span class="s2">= </span><span class="s1">Double</span><span class="s2">.</span><span class="s1">parseDouble</span><span class="s2">(</span><span class="s1">fields</span><span class="s2">[</span><span class="s4">2</span><span class="s2">]);</span>
+                    <span class="s1">String imagePath </span><span class="s2">= </span><span class="s1">fields</span><span class="s2">[</span><span class="s4">3</span><span class="s2">];</span>
+
+                    <span class="s1">products</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Product</span><span class="s2">(</span><span class="s1">id</span><span class="s2">, </span><span class="s1">name</span><span class="s2">, </span><span class="s1">price</span><span class="s2">, </span><span class="s1">imagePath</span><span class="s2">));</span>
+                <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">NumberFormatException </span><span class="s2">| </span><span class="s1">ArrayIndexOutOfBoundsException e</span><span class="s2">) {</span>
+                    <span class="s1">e</span><span class="s2">.</span><span class="s1">printStackTrace</span><span class="s2">();</span>
+                <span class="s2">}</span>
+            <span class="s2">}</span>
+        <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">IOException e</span><span class="s2">) {</span>
+            <span class="s1">e</span><span class="s2">.</span><span class="s1">printStackTrace</span><span class="s2">();</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+
+    <span class="s0">private void </span><span class="s1">saveProducts</span><span class="s2">() {</span>
+        <span class="s0">try </span><span class="s2">(</span><span class="s1">BufferedWriter writer </span><span class="s2">= </span><span class="s0">new </span><span class="s1">BufferedWriter</span><span class="s2">(</span><span class="s0">new </span><span class="s1">FileWriter</span><span class="s2">(</span><span class="s1">PRODUCTS_FILE</span><span class="s2">))) {</span>
+            <span class="s0">for </span><span class="s2">(</span><span class="s1">Product product </span><span class="s2">: </span><span class="s1">products</span><span class="s2">) {</span>
+                <span class="s1">writer</span><span class="s2">.</span><span class="s1">write</span><span class="s2">(</span><span class="s1">product</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">() + </span><span class="s1">DELIMITER </span><span class="s2">+ </span><span class="s1">product</span><span class="s2">.</span><span class="s1">getName</span><span class="s2">() + </span><span class="s1">DELIMITER </span><span class="s2">+ </span><span class="s1">product</span><span class="s2">.</span><span class="s1">getPrice</span><span class="s2">() + </span><span class="s1">DELIMITER </span><span class="s2">+ </span><span class="s1">product</span><span class="s2">.</span><span class="s1">getImagePath</span><span class="s2">());</span>
+                <span class="s1">writer</span><span class="s2">.</span><span class="s1">newLine</span><span class="s2">();</span>
+            <span class="s2">}</span>
+        <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">IOException e</span><span class="s2">) {</span>
+            <span class="s1">System</span><span class="s2">.</span><span class="s1">out</span><span class="s2">.</span><span class="s1">println</span><span class="s2">(</span><span class="s3">&quot;Error saving products: &quot; </span><span class="s2">+ </span><span class="s1">e</span><span class="s2">.</span><span class="s1">getMessage</span><span class="s2">());</span>
+            <span class="s1">e</span><span class="s2">.</span><span class="s1">printStackTrace</span><span class="s2">();</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">stop</span><span class="s2">() {</span>
+        <span class="s1">saveProducts</span><span class="s2">();</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private void </span><span class="s1">showLoginPage</span><span class="s2">(</span><span class="s1">Stage stage</span><span class="s2">) {</span>
+        <span class="s1">GridPane login </span><span class="s2">= </span><span class="s0">new </span><span class="s1">GridPane</span><span class="s2">();</span>
+        <span class="s1">stage</span><span class="s2">.</span><span class="s1">setTitle</span><span class="s2">(</span><span class="s3">&quot;Login Page&quot;</span><span class="s2">);</span>
+        <span class="s1">login</span><span class="s2">.</span><span class="s1">setAlignment</span><span class="s2">(</span><span class="s1">Pos</span><span class="s2">.</span><span class="s1">CENTER</span><span class="s2">);</span>
+        <span class="s1">login</span><span class="s2">.</span><span class="s1">setPadding</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Insets</span><span class="s2">(</span><span class="s4">20</span><span class="s2">));</span>
+        <span class="s1">login</span><span class="s2">.</span><span class="s1">setVgap</span><span class="s2">(</span><span class="s4">10</span><span class="s2">);</span>
+        <span class="s1">login</span><span class="s2">.</span><span class="s1">setHgap</span><span class="s2">(</span><span class="s4">10</span><span class="s2">);</span>
+        <span class="s1">Image icon </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Image</span><span class="s2">(</span><span class="s3">&quot;logo.jpg&quot;</span><span class="s2">);</span>
+        <span class="s1">stage</span><span class="s2">.</span><span class="s1">getIcons</span><span class="s2">().</span><span class="s1">add</span><span class="s2">(</span><span class="s1">icon</span><span class="s2">);</span>
+
+        <span class="s0">try </span><span class="s2">{</span>
+            <span class="s1">FileInputStream fis </span><span class="s2">= </span><span class="s0">new </span><span class="s1">FileInputStream</span><span class="s2">(</span><span class="s3">&quot;C:</span><span class="s0">\\</span><span class="s3">Users</span><span class="s0">\\</span><span class="s3">DELL</span><span class="s0">\\</span><span class="s3">OneDrive</span><span class="s0">\\</span><span class="s3">Documents</span><span class="s0">\\</span><span class="s3">New folder</span><span class="s0">\\</span><span class="s3">OIP.jpg&quot;</span><span class="s2">);</span>
+            <span class="s1">Image image </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Image</span><span class="s2">(</span><span class="s1">fis</span><span class="s2">);</span>
+            <span class="s1">BackgroundImage ni </span><span class="s2">= </span><span class="s0">new </span><span class="s1">BackgroundImage</span><span class="s2">(</span><span class="s1">image</span><span class="s2">, </span><span class="s1">BackgroundRepeat</span><span class="s2">.</span><span class="s1">NO_REPEAT</span><span class="s2">, </span><span class="s1">BackgroundRepeat</span><span class="s2">.</span><span class="s1">NO_REPEAT</span><span class="s2">, </span><span class="s1">BackgroundPosition</span><span class="s2">.</span><span class="s1">DEFAULT</span><span class="s2">, </span><span class="s0">new </span><span class="s1">BackgroundSize</span><span class="s2">(</span><span class="s1">BackgroundSize</span><span class="s2">.</span><span class="s1">AUTO</span><span class="s2">, </span><span class="s1">BackgroundSize</span><span class="s2">.</span><span class="s1">AUTO</span><span class="s2">, </span><span class="s0">false</span><span class="s2">, </span><span class="s0">false</span><span class="s2">, </span><span class="s0">true</span><span class="s2">, </span><span class="s0">true</span><span class="s2">));</span>
+            <span class="s1">Background b </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Background</span><span class="s2">(</span><span class="s1">ni</span><span class="s2">);</span>
+            <span class="s1">login</span><span class="s2">.</span><span class="s1">setBackground</span><span class="s2">(</span><span class="s1">b</span><span class="s2">);</span>
+        <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">FileNotFoundException e</span><span class="s2">) {</span>
+            <span class="s1">e</span><span class="s2">.</span><span class="s1">printStackTrace</span><span class="s2">();</span>
+        <span class="s2">}</span>
+
+        <span class="s1">Label loginLabel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Label</span><span class="s2">(</span><span class="s3">&quot;Welcome&quot;</span><span class="s2">);</span>
+        <span class="s1">loginLabel</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s1">Font</span><span class="s2">.</span><span class="s1">font</span><span class="s2">(</span><span class="s3">&quot;TimesNewRoman&quot;</span><span class="s2">, </span><span class="s1">FontWeight</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">, </span><span class="s4">16</span><span class="s2">));</span>
+        <span class="s1">loginLabel</span><span class="s2">.</span><span class="s1">setTextFill</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">BLACK</span><span class="s2">);</span>
+        <span class="s1">login</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">loginLabel</span><span class="s2">, </span><span class="s4">1</span><span class="s2">, </span><span class="s4">0</span><span class="s2">);</span>
+
+        <span class="s1">Label userName </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Label</span><span class="s2">(</span><span class="s3">&quot;Enter the username&quot;</span><span class="s2">);</span>
+        <span class="s1">userName</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s1">Font</span><span class="s2">.</span><span class="s1">font</span><span class="s2">(</span><span class="s3">&quot;TimesNewRoman&quot;</span><span class="s2">,</span><span class="s1">FontWeight</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">,</span><span class="s4">12</span><span class="s2">));</span>
+        <span class="s1">login</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">userName</span><span class="s2">, </span><span class="s4">0</span><span class="s2">, </span><span class="s4">1</span><span class="s2">);</span>
+        <span class="s1">TextField nameField </span><span class="s2">= </span><span class="s0">new </span><span class="s1">TextField</span><span class="s2">();</span>
+        <span class="s1">login</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">nameField</span><span class="s2">, </span><span class="s4">1</span><span class="s2">, </span><span class="s4">1</span><span class="s2">);</span>
+
+        <span class="s1">Label passwordLabel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Label</span><span class="s2">(</span><span class="s3">&quot;Enter your password&quot;</span><span class="s2">);</span>
+        <span class="s1">passwordLabel</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s1">Font</span><span class="s2">.</span><span class="s1">font</span><span class="s2">(</span><span class="s3">&quot;TimesNewRoman&quot;</span><span class="s2">,</span><span class="s1">FontWeight</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">,</span><span class="s4">12</span><span class="s2">));</span>
+        <span class="s1">login</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">passwordLabel</span><span class="s2">, </span><span class="s4">0</span><span class="s2">, </span><span class="s4">2</span><span class="s2">);</span>
+        <span class="s1">PasswordField passField </span><span class="s2">= </span><span class="s0">new </span><span class="s1">PasswordField</span><span class="s2">();</span>
+        <span class="s1">login</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">passField</span><span class="s2">, </span><span class="s4">1</span><span class="s2">, </span><span class="s4">2</span><span class="s2">);</span>
+
+        <span class="s1">Button loginButton </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Button</span><span class="s2">(</span><span class="s3">&quot;Login&quot;</span><span class="s2">);</span>
+        <span class="s1">loginButton</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s1">Font</span><span class="s2">.</span><span class="s1">font</span><span class="s2">(</span><span class="s3">&quot;TimesNewRoman&quot;</span><span class="s2">,</span><span class="s1">FontWeight</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">,</span><span class="s4">12</span><span class="s2">));</span>
+        <span class="s1">login</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">loginButton</span><span class="s2">, </span><span class="s4">1</span><span class="s2">, </span><span class="s4">3</span><span class="s2">);</span>
+
+        <span class="s1">Label messageLabel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Label</span><span class="s2">();</span>
+        <span class="s1">login</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">messageLabel</span><span class="s2">, </span><span class="s4">1</span><span class="s2">, </span><span class="s4">4</span><span class="s2">);</span>
+
+        <span class="s1">loginButton</span><span class="s2">.</span><span class="s1">setOnAction</span><span class="s2">(</span><span class="s1">event -&gt; </span><span class="s2">{</span>
+            <span class="s1">String username </span><span class="s2">= </span><span class="s1">nameField</span><span class="s2">.</span><span class="s1">getText</span><span class="s2">();</span>
+            <span class="s1">String password </span><span class="s2">= </span><span class="s1">passField</span><span class="s2">.</span><span class="s1">getText</span><span class="s2">();</span>
+
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">isValidCredentials</span><span class="s2">(</span><span class="s1">username</span><span class="s2">, </span><span class="s1">password</span><span class="s2">)) {</span>
+                <span class="s1">currentCustomerName </span><span class="s2">= </span><span class="s1">username</span><span class="s2">;</span>
+                <span class="s1">showProductsPage</span><span class="s2">(</span><span class="s1">stage</span><span class="s2">);</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">messageLabel</span><span class="s2">.</span><span class="s1">setText</span><span class="s2">(</span><span class="s3">&quot;Invalid username or password.&quot;</span><span class="s2">);</span>
+                <span class="s1">messageLabel</span><span class="s2">.</span><span class="s1">setTextFill</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">RED</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">});</span>
+
+        <span class="s1">Label haveNoAccount </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Label</span><span class="s2">(</span><span class="s3">&quot;Don't have an Account?&quot;</span><span class="s2">);</span>
+        <span class="s1">haveNoAccount</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s1">Font</span><span class="s2">.</span><span class="s1">font</span><span class="s2">(</span><span class="s3">&quot;TimesNewRoman&quot;</span><span class="s2">,</span><span class="s1">FontWeight</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">,</span><span class="s4">12</span><span class="s2">));</span>
+        <span class="s1">login</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">haveNoAccount</span><span class="s2">, </span><span class="s4">0</span><span class="s2">, </span><span class="s4">5</span><span class="s2">);</span>
+        <span class="s1">Button signinButton </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Button</span><span class="s2">(</span><span class="s3">&quot;Sign up&quot;</span><span class="s2">);</span>
+        <span class="s1">signinButton</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s1">Font</span><span class="s2">.</span><span class="s1">font</span><span class="s2">(</span><span class="s3">&quot;TimesNewRoman&quot;</span><span class="s2">,</span><span class="s1">FontWeight</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">,</span><span class="s4">12</span><span class="s2">));</span>
+        <span class="s1">login</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">signinButton</span><span class="s2">, </span><span class="s4">1</span><span class="s2">, </span><span class="s4">5</span><span class="s2">);</span>
+
+        <span class="s1">signinButton</span><span class="s2">.</span><span class="s1">setOnAction</span><span class="s2">(</span><span class="s1">e -&gt; showSignupPage</span><span class="s2">(</span><span class="s1">stage</span><span class="s2">));</span>
+
+        <span class="s1">Scene scene </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scene</span><span class="s2">(</span><span class="s1">login</span><span class="s2">, </span><span class="s4">400</span><span class="s2">, </span><span class="s4">400</span><span class="s2">, </span><span class="s1">Color</span><span class="s2">.</span><span class="s1">GRAY</span><span class="s2">);</span>
+        <span class="s1">stage</span><span class="s2">.</span><span class="s1">setTitle</span><span class="s2">(</span><span class="s3">&quot;Cosmetics Shop&quot;</span><span class="s2">);</span>
+        <span class="s1">stage</span><span class="s2">.</span><span class="s1">setScene</span><span class="s2">(</span><span class="s1">scene</span><span class="s2">);</span>
+        <span class="s1">stage</span><span class="s2">.</span><span class="s1">show</span><span class="s2">();</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private boolean </span><span class="s1">isValidCredentials</span><span class="s2">(</span><span class="s1">String username</span><span class="s2">, </span><span class="s1">String password</span><span class="s2">) {</span>
+        <span class="s0">try </span><span class="s2">(</span><span class="s1">BufferedReader reader </span><span class="s2">= </span><span class="s0">new </span><span class="s1">BufferedReader</span><span class="s2">(</span><span class="s0">new </span><span class="s1">FileReader</span><span class="s2">(</span><span class="s1">USERS_FILE</span><span class="s2">))) {</span>
+            <span class="s1">String line</span><span class="s2">;</span>
+            <span class="s0">while </span><span class="s2">((</span><span class="s1">line </span><span class="s2">= </span><span class="s1">reader</span><span class="s2">.</span><span class="s1">readLine</span><span class="s2">()) != </span><span class="s0">null</span><span class="s2">) {</span>
+                <span class="s1">String</span><span class="s2">[] </span><span class="s1">parts </span><span class="s2">= </span><span class="s1">line</span><span class="s2">.</span><span class="s1">split</span><span class="s2">(</span><span class="s3">&quot;,&quot;</span><span class="s2">);</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">parts</span><span class="s2">.</span><span class="s1">length </span><span class="s2">== </span><span class="s4">2</span><span class="s2">) {</span>
+                    <span class="s1">String storedUsername </span><span class="s2">= </span><span class="s1">parts</span><span class="s2">[</span><span class="s4">0</span><span class="s2">];</span>
+                    <span class="s1">String storedPassword </span><span class="s2">= </span><span class="s1">parts</span><span class="s2">[</span><span class="s4">1</span><span class="s2">];</span>
+                    <span class="s0">if </span><span class="s2">(</span><span class="s1">storedUsername</span><span class="s2">.</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">username</span><span class="s2">) &amp;&amp; </span><span class="s1">storedPassword</span><span class="s2">.</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">password</span><span class="s2">)) {</span>
+                        <span class="s0">return true</span><span class="s2">;</span>
+                    <span class="s2">}</span>
+                <span class="s2">}</span>
+            <span class="s2">}</span>
+        <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">IOException e</span><span class="s2">) {</span>
+            <span class="s1">e</span><span class="s2">.</span><span class="s1">printStackTrace</span><span class="s2">();</span>
+        <span class="s2">}</span>
+        <span class="s0">return false</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private void </span><span class="s1">addUserToFile</span><span class="s2">(</span><span class="s1">String username</span><span class="s2">, </span><span class="s1">String password</span><span class="s2">) {</span>
+        <span class="s0">try </span><span class="s2">(</span><span class="s1">BufferedWriter writer </span><span class="s2">= </span><span class="s0">new </span><span class="s1">BufferedWriter</span><span class="s2">(</span><span class="s0">new </span><span class="s1">FileWriter</span><span class="s2">(</span><span class="s1">USERS_FILE</span><span class="s2">, </span><span class="s0">true</span><span class="s2">))) {</span>
+            <span class="s1">writer</span><span class="s2">.</span><span class="s1">write</span><span class="s2">(</span><span class="s1">username </span><span class="s2">+ </span><span class="s1">DELIMITER </span><span class="s2">+ </span><span class="s1">password</span><span class="s2">);</span>
+            <span class="s1">writer</span><span class="s2">.</span><span class="s1">newLine</span><span class="s2">();</span>
+        <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">IOException e</span><span class="s2">) {</span>
+            <span class="s1">e</span><span class="s2">.</span><span class="s1">printStackTrace</span><span class="s2">();</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private boolean </span><span class="s1">userExists</span><span class="s2">(</span><span class="s1">String username</span><span class="s2">) {</span>
+        <span class="s0">try </span><span class="s2">(</span><span class="s1">BufferedReader reader </span><span class="s2">= </span><span class="s0">new </span><span class="s1">BufferedReader</span><span class="s2">(</span><span class="s0">new </span><span class="s1">FileReader</span><span class="s2">(</span><span class="s1">USERS_FILE</span><span class="s2">))) {</span>
+            <span class="s1">String line</span><span class="s2">;</span>
+            <span class="s0">while </span><span class="s2">((</span><span class="s1">line </span><span class="s2">= </span><span class="s1">reader</span><span class="s2">.</span><span class="s1">readLine</span><span class="s2">()) != </span><span class="s0">null</span><span class="s2">) {</span>
+                <span class="s1">String</span><span class="s2">[] </span><span class="s1">parts </span><span class="s2">= </span><span class="s1">line</span><span class="s2">.</span><span class="s1">split</span><span class="s2">(</span><span class="s1">DELIMITER</span><span class="s2">);</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">parts</span><span class="s2">.</span><span class="s1">length </span><span class="s2">&gt; </span><span class="s4">0 </span><span class="s2">&amp;&amp; </span><span class="s1">parts</span><span class="s2">[</span><span class="s4">0</span><span class="s2">].</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">username</span><span class="s2">)) {</span>
+                    <span class="s0">return true</span><span class="s2">;</span>
+                <span class="s2">}</span>
+            <span class="s2">}</span>
+        <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">IOException e</span><span class="s2">) {</span>
+            <span class="s1">e</span><span class="s2">.</span><span class="s1">printStackTrace</span><span class="s2">();</span>
+        <span class="s2">}</span>
+        <span class="s0">return false</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private void </span><span class="s1">showSignupPage</span><span class="s2">(</span><span class="s1">Stage stage</span><span class="s2">) {</span>
+        <span class="s1">GridPane signup </span><span class="s2">= </span><span class="s0">new </span><span class="s1">GridPane</span><span class="s2">();</span>
+        <span class="s1">stage</span><span class="s2">.</span><span class="s1">setTitle</span><span class="s2">(</span><span class="s3">&quot;Signup Page&quot;</span><span class="s2">);</span>
+        <span class="s1">signup</span><span class="s2">.</span><span class="s1">setAlignment</span><span class="s2">(</span><span class="s1">Pos</span><span class="s2">.</span><span class="s1">CENTER</span><span class="s2">);</span>
+        <span class="s1">signup</span><span class="s2">.</span><span class="s1">setVgap</span><span class="s2">(</span><span class="s4">20</span><span class="s2">);</span>
+        <span class="s1">signup</span><span class="s2">.</span><span class="s1">setHgap</span><span class="s2">(</span><span class="s4">20</span><span class="s2">);</span>
+        <span class="s1">signup</span><span class="s2">.</span><span class="s1">setPadding</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Insets</span><span class="s2">(</span><span class="s4">20</span><span class="s2">));</span>
+
+        <span class="s0">try </span><span class="s2">{</span>
+            <span class="s1">FileInputStream fis </span><span class="s2">= </span><span class="s0">new </span><span class="s1">FileInputStream</span><span class="s2">(</span><span class="s3">&quot;C:</span><span class="s0">\\</span><span class="s3">Users</span><span class="s0">\\</span><span class="s3">DELL</span><span class="s0">\\</span><span class="s3">OneDrive</span><span class="s0">\\</span><span class="s3">Documents</span><span class="s0">\\</span><span class="s3">New folder</span><span class="s0">\\</span><span class="s3">OIP.jpg&quot;</span><span class="s2">);</span>
+            <span class="s1">Image image </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Image</span><span class="s2">(</span><span class="s1">fis</span><span class="s2">);</span>
+            <span class="s1">BackgroundImage ni </span><span class="s2">= </span><span class="s0">new </span><span class="s1">BackgroundImage</span><span class="s2">(</span><span class="s1">image</span><span class="s2">, </span><span class="s1">BackgroundRepeat</span><span class="s2">.</span><span class="s1">NO_REPEAT</span><span class="s2">, </span><span class="s1">BackgroundRepeat</span><span class="s2">.</span><span class="s1">NO_REPEAT</span><span class="s2">, </span><span class="s1">BackgroundPosition</span><span class="s2">.</span><span class="s1">DEFAULT</span><span class="s2">, </span><span class="s0">new </span><span class="s1">BackgroundSize</span><span class="s2">(</span><span class="s1">BackgroundSize</span><span class="s2">.</span><span class="s1">AUTO</span><span class="s2">, </span><span class="s1">BackgroundSize</span><span class="s2">.</span><span class="s1">AUTO</span><span class="s2">, </span><span class="s0">false</span><span class="s2">, </span><span class="s0">false</span><span class="s2">, </span><span class="s0">true</span><span class="s2">, </span><span class="s0">true</span><span class="s2">));</span>
+            <span class="s1">Background b </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Background</span><span class="s2">(</span><span class="s1">ni</span><span class="s2">);</span>
+            <span class="s1">signup</span><span class="s2">.</span><span class="s1">setBackground</span><span class="s2">(</span><span class="s1">b</span><span class="s2">);</span>
+        <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">FileNotFoundException e</span><span class="s2">) {</span>
+            <span class="s1">e</span><span class="s2">.</span><span class="s1">printStackTrace</span><span class="s2">();</span>
+        <span class="s2">}</span>
+
+        <span class="s1">Label userName </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Label</span><span class="s2">(</span><span class="s3">&quot;Enter the username&quot;</span><span class="s2">);</span>
+        <span class="s1">userName</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s1">Font</span><span class="s2">.</span><span class="s1">font</span><span class="s2">(</span><span class="s3">&quot;TimesNewRoman&quot;</span><span class="s2">,</span><span class="s1">FontWeight</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">,</span><span class="s4">12</span><span class="s2">));</span>
+        <span class="s1">signup</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">userName</span><span class="s2">, </span><span class="s4">0</span><span class="s2">, </span><span class="s4">2</span><span class="s2">);</span>
+
+        <span class="s1">TextField nameField </span><span class="s2">= </span><span class="s0">new </span><span class="s1">TextField</span><span class="s2">();</span>
+        <span class="s1">signup</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">nameField</span><span class="s2">, </span><span class="s4">1</span><span class="s2">, </span><span class="s4">2</span><span class="s2">);</span>
+
+        <span class="s1">Label passwordLabel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Label</span><span class="s2">(</span><span class="s3">&quot;Enter your password&quot;</span><span class="s2">);</span>
+        <span class="s1">passwordLabel</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s1">Font</span><span class="s2">.</span><span class="s1">font</span><span class="s2">(</span><span class="s3">&quot;TimesNewRoman&quot;</span><span class="s2">,</span><span class="s1">FontWeight</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">,</span><span class="s4">12</span><span class="s2">));</span>
+        <span class="s1">signup</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">passwordLabel</span><span class="s2">, </span><span class="s4">0</span><span class="s2">, </span><span class="s4">3</span><span class="s2">);</span>
+
+        <span class="s1">PasswordField passField </span><span class="s2">= </span><span class="s0">new </span><span class="s1">PasswordField</span><span class="s2">();</span>
+        <span class="s1">signup</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">passField</span><span class="s2">, </span><span class="s4">1</span><span class="s2">, </span><span class="s4">3</span><span class="s2">);</span>
+
+        <span class="s1">Label conpasswordLabel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Label</span><span class="s2">(</span><span class="s3">&quot;Enter your confirm password&quot;</span><span class="s2">);</span>
+        <span class="s1">conpasswordLabel</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s1">Font</span><span class="s2">.</span><span class="s1">font</span><span class="s2">(</span><span class="s3">&quot;TimesNewRoman&quot;</span><span class="s2">,</span><span class="s1">FontWeight</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">,</span><span class="s4">12</span><span class="s2">));</span>
+        <span class="s1">signup</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">conpasswordLabel</span><span class="s2">, </span><span class="s4">0</span><span class="s2">, </span><span class="s4">4</span><span class="s2">);</span>
+
+        <span class="s1">PasswordField conpassField </span><span class="s2">= </span><span class="s0">new </span><span class="s1">PasswordField</span><span class="s2">();</span>
+        <span class="s1">signup</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">conpassField</span><span class="s2">, </span><span class="s4">1</span><span class="s2">, </span><span class="s4">4</span><span class="s2">);</span>
+
+        <span class="s1">Label gender </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Label</span><span class="s2">(</span><span class="s3">&quot;What is your Gender?&quot;</span><span class="s2">);</span>
+        <span class="s1">gender</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s1">Font</span><span class="s2">.</span><span class="s1">font</span><span class="s2">(</span><span class="s3">&quot;TimesNewRoman&quot;</span><span class="s2">,</span><span class="s1">FontWeight</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">,</span><span class="s4">12</span><span class="s2">));</span>
+        <span class="s1">signup</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">gender</span><span class="s2">, </span><span class="s4">0</span><span class="s2">, </span><span class="s4">5</span><span class="s2">);</span>
+
+        <span class="s1">RadioButton m </span><span class="s2">= </span><span class="s0">new </span><span class="s1">RadioButton</span><span class="s2">(</span><span class="s3">&quot;Male&quot;</span><span class="s2">);</span>
+        <span class="s1">m</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s1">Font</span><span class="s2">.</span><span class="s1">font</span><span class="s2">(</span><span class="s3">&quot;TimesNewRoman&quot;</span><span class="s2">,</span><span class="s1">FontWeight</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">,</span><span class="s4">12</span><span class="s2">));</span>
+        <span class="s1">RadioButton f </span><span class="s2">= </span><span class="s0">new </span><span class="s1">RadioButton</span><span class="s2">(</span><span class="s3">&quot;Female&quot;</span><span class="s2">);</span>
+        <span class="s1">f</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s1">Font</span><span class="s2">.</span><span class="s1">font</span><span class="s2">(</span><span class="s3">&quot;TimesNewRoman&quot;</span><span class="s2">,</span><span class="s1">FontWeight</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">,</span><span class="s4">12</span><span class="s2">));</span>
+
+        <span class="s1">HBox hBox </span><span class="s2">= </span><span class="s0">new </span><span class="s1">HBox</span><span class="s2">();</span>
+        <span class="s1">hBox</span><span class="s2">.</span><span class="s1">getChildren</span><span class="s2">().</span><span class="s1">addAll</span><span class="s2">(</span><span class="s1">m</span><span class="s2">, </span><span class="s1">f</span><span class="s2">);</span>
+        <span class="s1">signup</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">hBox</span><span class="s2">, </span><span class="s4">1</span><span class="s2">, </span><span class="s4">5</span><span class="s2">);</span>
+
+        <span class="s1">ToggleGroup genderGroup </span><span class="s2">= </span><span class="s0">new </span><span class="s1">ToggleGroup</span><span class="s2">();</span>
+        <span class="s1">m</span><span class="s2">.</span><span class="s1">setToggleGroup</span><span class="s2">(</span><span class="s1">genderGroup</span><span class="s2">);</span>
+        <span class="s1">f</span><span class="s2">.</span><span class="s1">setToggleGroup</span><span class="s2">(</span><span class="s1">genderGroup</span><span class="s2">);</span>
+
+        <span class="s1">Button signupButton </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Button</span><span class="s2">(</span><span class="s3">&quot;Signup&quot;</span><span class="s2">);</span>
+        <span class="s1">signupButton</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s1">Font</span><span class="s2">.</span><span class="s1">font</span><span class="s2">(</span><span class="s3">&quot;TimesNewRoman&quot;</span><span class="s2">,</span><span class="s1">FontWeight</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">,</span><span class="s4">12</span><span class="s2">));</span>
+        <span class="s1">signup</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">signupButton</span><span class="s2">, </span><span class="s4">1</span><span class="s2">, </span><span class="s4">6</span><span class="s2">);</span>
+
+        <span class="s1">Label haveNoAccount </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Label</span><span class="s2">(</span><span class="s3">&quot;Already have an Account?&quot;</span><span class="s2">);</span>
+        <span class="s1">haveNoAccount</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s1">Font</span><span class="s2">.</span><span class="s1">font</span><span class="s2">(</span><span class="s3">&quot;TimesNewRoman&quot;</span><span class="s2">,</span><span class="s1">FontWeight</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">,</span><span class="s4">12</span><span class="s2">));</span>
+        <span class="s1">signup</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">haveNoAccount</span><span class="s2">, </span><span class="s4">0</span><span class="s2">, </span><span class="s4">7</span><span class="s2">);</span>
+
+        <span class="s1">Button loginButton </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Button</span><span class="s2">(</span><span class="s3">&quot;Login&quot;</span><span class="s2">);</span>
+        <span class="s1">loginButton</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s1">Font</span><span class="s2">.</span><span class="s1">font</span><span class="s2">(</span><span class="s3">&quot;TimesNewRoman&quot;</span><span class="s2">,</span><span class="s1">FontWeight</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">,</span><span class="s4">12</span><span class="s2">));</span>
+        <span class="s1">signup</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">loginButton</span><span class="s2">, </span><span class="s4">1</span><span class="s2">, </span><span class="s4">7</span><span class="s2">);</span>
+
+        <span class="s1">Label messageLabel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Label</span><span class="s2">();</span>
+        <span class="s1">signup</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">messageLabel</span><span class="s2">, </span><span class="s4">1</span><span class="s2">, </span><span class="s4">8</span><span class="s2">);</span>
+
+        <span class="s1">signupButton</span><span class="s2">.</span><span class="s1">setOnAction</span><span class="s2">(</span><span class="s1">e -&gt; </span><span class="s2">{</span>
+            <span class="s1">String username </span><span class="s2">= </span><span class="s1">nameField</span><span class="s2">.</span><span class="s1">getText</span><span class="s2">();</span>
+            <span class="s1">String password </span><span class="s2">= </span><span class="s1">passField</span><span class="s2">.</span><span class="s1">getText</span><span class="s2">();</span>
+            <span class="s1">String confirmPassword </span><span class="s2">= </span><span class="s1">conpassField</span><span class="s2">.</span><span class="s1">getText</span><span class="s2">();</span>
+
+            <span class="s0">if </span><span class="s2">(!</span><span class="s1">password</span><span class="s2">.</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">confirmPassword</span><span class="s2">)) {</span>
+                <span class="s1">showAlert</span><span class="s2">(</span><span class="s1">Alert</span><span class="s2">.</span><span class="s1">AlertType</span><span class="s2">.</span><span class="s1">ERROR</span><span class="s2">, </span><span class="s3">&quot;Error&quot;</span><span class="s2">, </span><span class="s3">&quot;Passwords do not match. Please try again.&quot;</span><span class="s2">);</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">userExists</span><span class="s2">(</span><span class="s1">username</span><span class="s2">)) {</span>
+                    <span class="s1">showAlert</span><span class="s2">(</span><span class="s1">Alert</span><span class="s2">.</span><span class="s1">AlertType</span><span class="s2">.</span><span class="s1">ERROR</span><span class="s2">, </span><span class="s3">&quot;Error&quot;</span><span class="s2">, </span><span class="s3">&quot;User already exists.&quot;</span><span class="s2">);</span>
+                <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                    <span class="s1">addUserToFile</span><span class="s2">(</span><span class="s1">username</span><span class="s2">, </span><span class="s1">password</span><span class="s2">);</span>
+                    <span class="s1">showAlert</span><span class="s2">(</span><span class="s1">Alert</span><span class="s2">.</span><span class="s1">AlertType</span><span class="s2">.</span><span class="s1">INFORMATION</span><span class="s2">, </span><span class="s3">&quot;Success&quot;</span><span class="s2">, </span><span class="s3">&quot;Account created successfully. Please login.&quot;</span><span class="s2">);</span>
+                    <span class="s1">showLoginPage</span><span class="s2">(</span><span class="s1">stage</span><span class="s2">);</span>
+                <span class="s2">}</span>
+            <span class="s2">}</span>
+        <span class="s2">});</span>
+
+        <span class="s1">loginButton</span><span class="s2">.</span><span class="s1">setOnAction</span><span class="s2">(</span><span class="s1">e -&gt; showLoginPage</span><span class="s2">(</span><span class="s1">stage</span><span class="s2">));</span>
+
+        <span class="s1">Scene scene </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scene</span><span class="s2">(</span><span class="s1">signup</span><span class="s2">, </span><span class="s4">400</span><span class="s2">, </span><span class="s4">400</span><span class="s2">, </span><span class="s1">Color</span><span class="s2">.</span><span class="s1">LIGHTPINK</span><span class="s2">);</span>
+        <span class="s1">stage</span><span class="s2">.</span><span class="s1">setScene</span><span class="s2">(</span><span class="s1">scene</span><span class="s2">);</span>
+        <span class="s1">stage</span><span class="s2">.</span><span class="s1">show</span><span class="s2">();</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private void </span><span class="s1">showProductsPage</span><span class="s2">(</span><span class="s1">Stage stage</span><span class="s2">) {</span>
+        <span class="s1">GridPane productsPage </span><span class="s2">= </span><span class="s0">new </span><span class="s1">GridPane</span><span class="s2">();</span>
+        <span class="s1">stage</span><span class="s2">.</span><span class="s1">setTitle</span><span class="s2">(</span><span class="s3">&quot;Products page&quot;</span><span class="s2">);</span>
+        <span class="s1">productsPage</span><span class="s2">.</span><span class="s1">setAlignment</span><span class="s2">(</span><span class="s1">Pos</span><span class="s2">.</span><span class="s1">CENTER</span><span class="s2">);</span>
+        <span class="s1">productsPage</span><span class="s2">.</span><span class="s1">setPadding</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Insets</span><span class="s2">(</span><span class="s4">20</span><span class="s2">));</span>
+        <span class="s1">productsPage</span><span class="s2">.</span><span class="s1">setHgap</span><span class="s2">(</span><span class="s4">10</span><span class="s2">);</span>
+        <span class="s1">productsPage</span><span class="s2">.</span><span class="s1">setVgap</span><span class="s2">(</span><span class="s4">40</span><span class="s2">);</span>
+
+        <span class="s0">try </span><span class="s2">{</span>
+            <span class="s1">FileInputStream fis </span><span class="s2">= </span><span class="s0">new </span><span class="s1">FileInputStream</span><span class="s2">(</span><span class="s3">&quot;C:</span><span class="s0">\\</span><span class="s3">Users</span><span class="s0">\\</span><span class="s3">DELL</span><span class="s0">\\</span><span class="s3">Downloads</span><span class="s0">\\</span><span class="s3">OIP.jpg&quot;</span><span class="s2">);</span>
+            <span class="s1">Image image </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Image</span><span class="s2">(</span><span class="s1">fis</span><span class="s2">);</span>
+            <span class="s1">BackgroundImage ni </span><span class="s2">= </span><span class="s0">new </span><span class="s1">BackgroundImage</span><span class="s2">(</span><span class="s1">image</span><span class="s2">, </span><span class="s1">BackgroundRepeat</span><span class="s2">.</span><span class="s1">NO_REPEAT</span><span class="s2">, </span><span class="s1">BackgroundRepeat</span><span class="s2">.</span><span class="s1">NO_REPEAT</span><span class="s2">, </span><span class="s1">BackgroundPosition</span><span class="s2">.</span><span class="s1">DEFAULT</span><span class="s2">, </span><span class="s0">new </span><span class="s1">BackgroundSize</span><span class="s2">(</span><span class="s1">BackgroundSize</span><span class="s2">.</span><span class="s1">AUTO</span><span class="s2">, </span><span class="s1">BackgroundSize</span><span class="s2">.</span><span class="s1">AUTO</span><span class="s2">, </span><span class="s0">false</span><span class="s2">, </span><span class="s0">false</span><span class="s2">, </span><span class="s0">true</span><span class="s2">, </span><span class="s0">true</span><span class="s2">));</span>
+            <span class="s1">Background b </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Background</span><span class="s2">(</span><span class="s1">ni</span><span class="s2">);</span>
+            <span class="s1">productsPage</span><span class="s2">.</span><span class="s1">setBackground</span><span class="s2">(</span><span class="s1">b</span><span class="s2">);</span>
+        <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">FileNotFoundException e</span><span class="s2">) {</span>
+            <span class="s1">e</span><span class="s2">.</span><span class="s1">printStackTrace</span><span class="s2">();</span>
+        <span class="s2">}</span>
+
+        <span class="s1">Label cosmetics </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Label</span><span class="s2">(</span><span class="s3">&quot;Cosmetics Shop&quot;</span><span class="s2">);</span>
+        <span class="s1">cosmetics</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s1">Font</span><span class="s2">.</span><span class="s1">font</span><span class="s2">(</span><span class="s3">&quot;Verdana&quot;</span><span class="s2">, </span><span class="s1">FontWeight</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">, </span><span class="s4">16</span><span class="s2">));</span>
+        <span class="s1">cosmetics</span><span class="s2">.</span><span class="s1">setTextFill</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">DEEPPINK</span><span class="s2">);</span>
+        <span class="s1">productsPage</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">cosmetics</span><span class="s2">, </span><span class="s4">0</span><span class="s2">, </span><span class="s4">0</span><span class="s2">);</span>
+
+        <span class="s1">Button viewProduct </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Button</span><span class="s2">(</span><span class="s3">&quot;View all products&quot;</span><span class="s2">);</span>
+        <span class="s1">productsPage</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">viewProduct</span><span class="s2">, </span><span class="s4">0</span><span class="s2">, </span><span class="s4">1</span><span class="s2">);</span>
+        <span class="s1">viewProduct</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s1">Font</span><span class="s2">.</span><span class="s1">font</span><span class="s2">(</span><span class="s3">&quot;Verdana&quot;</span><span class="s2">, </span><span class="s1">FontWeight</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">, </span><span class="s4">12</span><span class="s2">));</span>
+        <span class="s1">viewProduct</span><span class="s2">.</span><span class="s1">setTextFill</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">DEEPPINK</span><span class="s2">);</span>
+
+
+        <span class="s1">Button totalBill </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Button</span><span class="s2">(</span><span class="s3">&quot;Total bill&quot;</span><span class="s2">);</span>
+        <span class="s1">totalBill</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s1">Font</span><span class="s2">.</span><span class="s1">font</span><span class="s2">(</span><span class="s3">&quot;Verdana&quot;</span><span class="s2">, </span><span class="s1">FontWeight</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">, </span><span class="s4">12</span><span class="s2">));</span>
+        <span class="s1">totalBill</span><span class="s2">.</span><span class="s1">setTextFill</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">DEEPPINK</span><span class="s2">);</span>
+        <span class="s1">productsPage</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">totalBill</span><span class="s2">, </span><span class="s4">0</span><span class="s2">, </span><span class="s4">2</span><span class="s2">);</span>
+
+        <span class="s1">Button exit </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Button</span><span class="s2">(</span><span class="s3">&quot;Exit&quot;</span><span class="s2">);</span>
+        <span class="s1">exit</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s1">Font</span><span class="s2">.</span><span class="s1">font</span><span class="s2">(</span><span class="s3">&quot;Verdana&quot;</span><span class="s2">, </span><span class="s1">FontWeight</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">, </span><span class="s4">12</span><span class="s2">));</span>
+        <span class="s1">exit</span><span class="s2">.</span><span class="s1">setTextFill</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">DEEPPINK</span><span class="s2">);</span>
+        <span class="s1">productsPage</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">exit</span><span class="s2">, </span><span class="s4">0</span><span class="s2">, </span><span class="s4">3</span><span class="s2">);</span>
+
+        <span class="s1">Button backButton </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Button</span><span class="s2">(</span><span class="s3">&quot;Back&quot;</span><span class="s2">);</span>
+        <span class="s1">backButton</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s1">Font</span><span class="s2">.</span><span class="s1">font</span><span class="s2">(</span><span class="s3">&quot;Verdana&quot;</span><span class="s2">, </span><span class="s1">FontWeight</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">, </span><span class="s4">12</span><span class="s2">));</span>
+        <span class="s1">backButton</span><span class="s2">.</span><span class="s1">setTextFill</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">DEEPPINK</span><span class="s2">);</span>
+        <span class="s1">productsPage</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">backButton</span><span class="s2">, </span><span class="s4">0</span><span class="s2">, </span><span class="s4">4</span><span class="s2">);</span>
+        <span class="s1">backButton</span><span class="s2">.</span><span class="s1">setOnAction</span><span class="s2">(</span><span class="s1">e -&gt; showLoginPage</span><span class="s2">(</span><span class="s1">stage</span><span class="s2">));</span>
+
+        <span class="s1">viewProduct</span><span class="s2">.</span><span class="s1">setOnAction</span><span class="s2">(</span><span class="s1">e -&gt; showProductsListPage</span><span class="s2">(</span><span class="s1">stage</span><span class="s2">));</span>
+        <span class="s1">totalBill</span><span class="s2">.</span><span class="s1">setOnAction</span><span class="s2">(</span><span class="s1">e -&gt; generateReceipt</span><span class="s2">(</span><span class="s1">stage</span><span class="s2">));</span>
+        <span class="s1">exit</span><span class="s2">.</span><span class="s1">setOnAction</span><span class="s2">(</span><span class="s1">e -&gt; stage</span><span class="s2">.</span><span class="s1">close</span><span class="s2">());</span>
+
+        <span class="s1">Scene scene </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scene</span><span class="s2">(</span><span class="s1">productsPage</span><span class="s2">, </span><span class="s4">400</span><span class="s2">, </span><span class="s4">400</span><span class="s2">, </span><span class="s1">Color</span><span class="s2">.</span><span class="s1">GRAY</span><span class="s2">);</span>
+        <span class="s1">stage</span><span class="s2">.</span><span class="s1">setScene</span><span class="s2">(</span><span class="s1">scene</span><span class="s2">);</span>
+        <span class="s1">stage</span><span class="s2">.</span><span class="s1">show</span><span class="s2">();</span>
+    <span class="s2">}</span>
+
+
+    <span class="s0">private void </span><span class="s1">showProductsListPage</span><span class="s2">(</span><span class="s1">Stage stage</span><span class="s2">) {</span>
+        <span class="s1">VBox productsListPage </span><span class="s2">= </span><span class="s0">new </span><span class="s1">VBox</span><span class="s2">(</span><span class="s4">20</span><span class="s2">);</span>
+        <span class="s1">productsListPage</span><span class="s2">.</span><span class="s1">setPadding</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Insets</span><span class="s2">(</span><span class="s4">20</span><span class="s2">));</span>
+
+        <span class="s1">FlowPane productsFlowPane </span><span class="s2">= </span><span class="s0">new </span><span class="s1">FlowPane</span><span class="s2">();</span>
+        <span class="s1">productsFlowPane</span><span class="s2">.</span><span class="s1">setHgap</span><span class="s2">(</span><span class="s4">30</span><span class="s2">);</span>
+        <span class="s1">productsFlowPane</span><span class="s2">.</span><span class="s1">setVgap</span><span class="s2">(</span><span class="s4">20</span><span class="s2">);</span>
+        <span class="s1">productsFlowPane</span><span class="s2">.</span><span class="s1">setAlignment</span><span class="s2">(</span><span class="s1">Pos</span><span class="s2">.</span><span class="s1">CENTER</span><span class="s2">);</span>
+        <span class="s0">try </span><span class="s2">{</span>
+            <span class="s1">FileInputStream fis </span><span class="s2">= </span><span class="s0">new </span><span class="s1">FileInputStream</span><span class="s2">(</span><span class="s3">&quot;C:</span><span class="s0">\\</span><span class="s3">Users</span><span class="s0">\\</span><span class="s3">DELL</span><span class="s0">\\</span><span class="s3">Downloads</span><span class="s0">\\</span><span class="s3">background.jpg&quot;</span><span class="s2">);</span>
+            <span class="s1">Image image </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Image</span><span class="s2">(</span><span class="s1">fis</span><span class="s2">);</span>
+            <span class="s1">BackgroundImage ni </span><span class="s2">= </span><span class="s0">new </span><span class="s1">BackgroundImage</span><span class="s2">(</span><span class="s1">image</span><span class="s2">, </span><span class="s1">BackgroundRepeat</span><span class="s2">.</span><span class="s1">NO_REPEAT</span><span class="s2">, </span><span class="s1">BackgroundRepeat</span><span class="s2">.</span><span class="s1">NO_REPEAT</span><span class="s2">, </span><span class="s1">BackgroundPosition</span><span class="s2">.</span><span class="s1">DEFAULT</span><span class="s2">, </span><span class="s0">new </span><span class="s1">BackgroundSize</span><span class="s2">(</span><span class="s1">BackgroundSize</span><span class="s2">.</span><span class="s1">AUTO</span><span class="s2">, </span><span class="s1">BackgroundSize</span><span class="s2">.</span><span class="s1">AUTO</span><span class="s2">, </span><span class="s0">false</span><span class="s2">, </span><span class="s0">false</span><span class="s2">, </span><span class="s0">true</span><span class="s2">, </span><span class="s0">true</span><span class="s2">));</span>
+            <span class="s1">Background b </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Background</span><span class="s2">(</span><span class="s1">ni</span><span class="s2">);</span>
+            <span class="s1">productsListPage</span><span class="s2">.</span><span class="s1">setBackground</span><span class="s2">(</span><span class="s1">b</span><span class="s2">);</span>
+        <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">FileNotFoundException e</span><span class="s2">) {</span>
+            <span class="s1">e</span><span class="s2">.</span><span class="s1">printStackTrace</span><span class="s2">();</span>
+        <span class="s2">}</span>
+
+        <span class="s0">for </span><span class="s2">(</span><span class="s1">Product product </span><span class="s2">: </span><span class="s1">products</span><span class="s2">) {</span>
+            <span class="s1">Image image </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Image</span><span class="s2">(</span><span class="s1">product</span><span class="s2">.</span><span class="s1">getImagePath</span><span class="s2">());</span>
+            <span class="s1">ImageView imageView </span><span class="s2">= </span><span class="s0">new </span><span class="s1">ImageView</span><span class="s2">(</span><span class="s1">image</span><span class="s2">);</span>
+            <span class="s1">imageView</span><span class="s2">.</span><span class="s1">setFitHeight</span><span class="s2">(</span><span class="s4">100</span><span class="s2">);</span>
+            <span class="s1">imageView</span><span class="s2">.</span><span class="s1">setFitWidth</span><span class="s2">(</span><span class="s4">100</span><span class="s2">);</span>
+
+            <span class="s1">Label nameLabel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Label</span><span class="s2">(</span><span class="s1">product</span><span class="s2">.</span><span class="s1">getName</span><span class="s2">());</span>
+            <span class="s1">nameLabel</span><span class="s2">.</span><span class="s1">setMaxWidth</span><span class="s2">(</span><span class="s4">100</span><span class="s2">);</span>
+            <span class="s1">nameLabel</span><span class="s2">.</span><span class="s1">setWrapText</span><span class="s2">(</span><span class="s0">true</span><span class="s2">);</span>
+            <span class="s1">nameLabel</span><span class="s2">.</span><span class="s1">setAlignment</span><span class="s2">(</span><span class="s1">Pos</span><span class="s2">.</span><span class="s1">CENTER</span><span class="s2">);</span>
+
+            <span class="s1">Label priceLabel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Label</span><span class="s2">(</span><span class="s1">String</span><span class="s2">.</span><span class="s1">format</span><span class="s2">(</span><span class="s3">&quot;$%.2f&quot;</span><span class="s2">, </span><span class="s1">product</span><span class="s2">.</span><span class="s1">getPrice</span><span class="s2">()));</span>
+
+            <span class="s1">Spinner</span><span class="s2">&lt;</span><span class="s1">Integer</span><span class="s2">&gt; </span><span class="s1">quantitySpinner </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Spinner</span><span class="s2">&lt;&gt;();</span>
+            <span class="s1">quantitySpinner</span><span class="s2">.</span><span class="s1">setValueFactory</span><span class="s2">(</span><span class="s0">new </span><span class="s1">SpinnerValueFactory</span><span class="s2">.</span><span class="s1">IntegerSpinnerValueFactory</span><span class="s2">(</span><span class="s4">1</span><span class="s2">, </span><span class="s4">100</span><span class="s2">, </span><span class="s4">1</span><span class="s2">));</span>
+
+            <span class="s1">Button addToCartButton </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Button</span><span class="s2">(</span><span class="s3">&quot;Add to Cart&quot;</span><span class="s2">);</span>
+            <span class="s1">addToCartButton</span><span class="s2">.</span><span class="s1">setOnAction</span><span class="s2">(</span><span class="s1">e -&gt; </span><span class="s2">{</span>
+                <span class="s0">int </span><span class="s1">quantity </span><span class="s2">= </span><span class="s1">quantitySpinner</span><span class="s2">.</span><span class="s1">getValue</span><span class="s2">();</span>
+                <span class="s1">cartItems</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">CartItem</span><span class="s2">(</span><span class="s1">product</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">(), </span><span class="s1">quantity</span><span class="s2">));</span>
+                <span class="s1">showAlert</span><span class="s2">(</span><span class="s1">Alert</span><span class="s2">.</span><span class="s1">AlertType</span><span class="s2">.</span><span class="s1">INFORMATION</span><span class="s2">, </span><span class="s3">&quot;Info&quot;</span><span class="s2">, </span><span class="s3">&quot;Added to cart: &quot; </span><span class="s2">+ </span><span class="s1">product</span><span class="s2">.</span><span class="s1">getName</span><span class="s2">() + </span><span class="s3">&quot; x &quot; </span><span class="s2">+ </span><span class="s1">quantity</span><span class="s2">);</span>
+            <span class="s2">});</span>
+
+            <span class="s1">VBox productBox </span><span class="s2">= </span><span class="s0">new </span><span class="s1">VBox</span><span class="s2">(</span><span class="s4">10</span><span class="s2">);</span>
+            <span class="s1">productBox</span><span class="s2">.</span><span class="s1">setAlignment</span><span class="s2">(</span><span class="s1">Pos</span><span class="s2">.</span><span class="s1">CENTER</span><span class="s2">);</span>
+            <span class="s1">productBox</span><span class="s2">.</span><span class="s1">getChildren</span><span class="s2">().</span><span class="s1">addAll</span><span class="s2">(</span><span class="s1">imageView</span><span class="s2">, </span><span class="s1">nameLabel</span><span class="s2">, </span><span class="s1">priceLabel</span><span class="s2">, </span><span class="s1">quantitySpinner</span><span class="s2">, </span><span class="s1">addToCartButton</span><span class="s2">);</span>
+
+            <span class="s1">productsFlowPane</span><span class="s2">.</span><span class="s1">getChildren</span><span class="s2">().</span><span class="s1">add</span><span class="s2">(</span><span class="s1">productBox</span><span class="s2">);</span>
+        <span class="s2">}</span>
+
+        <span class="s1">ScrollPane scrollPane </span><span class="s2">= </span><span class="s0">new </span><span class="s1">ScrollPane</span><span class="s2">(</span><span class="s1">productsFlowPane</span><span class="s2">);</span>
+        <span class="s1">scrollPane</span><span class="s2">.</span><span class="s1">setFitToWidth</span><span class="s2">(</span><span class="s0">true</span><span class="s2">);</span>
+        <span class="s1">scrollPane</span><span class="s2">.</span><span class="s1">setFitToHeight</span><span class="s2">(</span><span class="s0">true</span><span class="s2">);</span>
+
+        <span class="s1">Button backButton </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Button</span><span class="s2">(</span><span class="s3">&quot;Back&quot;</span><span class="s2">);</span>
+        <span class="s1">Button checkoutButton </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Button</span><span class="s2">(</span><span class="s3">&quot;Checkout&quot;</span><span class="s2">);</span>
+
+        <span class="s1">backButton</span><span class="s2">.</span><span class="s1">setOnAction</span><span class="s2">(</span><span class="s1">e -&gt; showProductsPage</span><span class="s2">(</span><span class="s1">stage</span><span class="s2">));</span>
+        <span class="s1">checkoutButton</span><span class="s2">.</span><span class="s1">setOnAction</span><span class="s2">(</span><span class="s1">e -&gt; generateReceipt</span><span class="s2">(</span><span class="s1">stage</span><span class="s2">));</span>
+
+        <span class="s1">HBox buttonsBox </span><span class="s2">= </span><span class="s0">new </span><span class="s1">HBox</span><span class="s2">(</span><span class="s4">20</span><span class="s2">);</span>
+        <span class="s1">buttonsBox</span><span class="s2">.</span><span class="s1">setAlignment</span><span class="s2">(</span><span class="s1">Pos</span><span class="s2">.</span><span class="s1">CENTER</span><span class="s2">);</span>
+        <span class="s1">buttonsBox</span><span class="s2">.</span><span class="s1">getChildren</span><span class="s2">().</span><span class="s1">addAll</span><span class="s2">(</span><span class="s1">backButton</span><span class="s2">, </span><span class="s1">checkoutButton</span><span class="s2">);</span>
+
+        <span class="s1">productsListPage</span><span class="s2">.</span><span class="s1">getChildren</span><span class="s2">().</span><span class="s1">addAll</span><span class="s2">(</span><span class="s1">scrollPane</span><span class="s2">, </span><span class="s1">buttonsBox</span><span class="s2">);</span>
+
+        <span class="s1">Scene scene </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scene</span><span class="s2">(</span><span class="s1">productsListPage</span><span class="s2">, </span><span class="s4">600</span><span class="s2">, </span><span class="s4">700</span><span class="s2">);</span>
+        <span class="s1">stage</span><span class="s2">.</span><span class="s1">setScene</span><span class="s2">(</span><span class="s1">scene</span><span class="s2">);</span>
+        <span class="s1">stage</span><span class="s2">.</span><span class="s1">show</span><span class="s2">();</span>
+    <span class="s2">}</span>
+
+
+
+    <span class="s0">private </span><span class="s1">Product getProductById</span><span class="s2">(</span><span class="s1">String id</span><span class="s2">) {</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s1">Product product </span><span class="s2">: </span><span class="s1">products</span><span class="s2">) {</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">product</span><span class="s2">.</span><span class="s1">getId</span><span class="s2">().</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">id</span><span class="s2">)) {</span>
+                <span class="s0">return </span><span class="s1">product</span><span class="s2">;</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+        <span class="s0">return null</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public void </span><span class="s1">generateReceipt</span><span class="s2">(</span><span class="s1">Stage stage</span><span class="s2">) {</span>
+        <span class="s1">VBox vbox </span><span class="s2">= </span><span class="s0">new </span><span class="s1">VBox</span><span class="s2">();</span>
+        <span class="s1">vbox</span><span class="s2">.</span><span class="s1">setAlignment</span><span class="s2">(</span><span class="s1">Pos</span><span class="s2">.</span><span class="s1">CENTER</span><span class="s2">);</span>
+        <span class="s1">vbox</span><span class="s2">.</span><span class="s1">setSpacing</span><span class="s2">(</span><span class="s4">10</span><span class="s2">);</span>
+
+        <span class="s1">Label receiptLabel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Label</span><span class="s2">(</span><span class="s3">&quot;Receipt&quot;</span><span class="s2">);</span>
+        <span class="s1">receiptLabel</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s1">Font</span><span class="s2">.</span><span class="s1">font</span><span class="s2">(</span><span class="s3">&quot;TimesNewRoman&quot;</span><span class="s2">,</span><span class="s1">FontWeight</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">,</span><span class="s4">16</span><span class="s2">));</span>
+        <span class="s1">vbox</span><span class="s2">.</span><span class="s1">getChildren</span><span class="s2">().</span><span class="s1">add</span><span class="s2">(</span><span class="s1">receiptLabel</span><span class="s2">);</span>
+
+        <span class="s0">double </span><span class="s1">total </span><span class="s2">= </span><span class="s4">0</span><span class="s2">;</span>
+
+        <span class="s1">Label customerLabel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Label</span><span class="s2">(</span><span class="s3">&quot;Customer: &quot; </span><span class="s2">+ </span><span class="s1">currentCustomerName</span><span class="s2">);</span>
+        <span class="s1">customerLabel</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s1">Font</span><span class="s2">.</span><span class="s1">font</span><span class="s2">(</span><span class="s3">&quot;TimesNewRoman&quot;</span><span class="s2">,</span><span class="s1">FontWeight</span><span class="s2">.</span><span class="s1">NORMAL</span><span class="s2">,</span><span class="s4">14</span><span class="s2">));</span>
+        <span class="s1">vbox</span><span class="s2">.</span><span class="s1">getChildren</span><span class="s2">().</span><span class="s1">add</span><span class="s2">(</span><span class="s1">customerLabel</span><span class="s2">);</span>
+
+        <span class="s1">vbox</span><span class="s2">.</span><span class="s1">getChildren</span><span class="s2">().</span><span class="s1">add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Label</span><span class="s2">(</span><span class="s3">&quot;&quot;</span><span class="s2">));</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s1">CartItem item </span><span class="s2">: </span><span class="s1">cartItems</span><span class="s2">) {</span>
+            <span class="s1">Product product </span><span class="s2">= </span><span class="s1">getProductById</span><span class="s2">(</span><span class="s1">item</span><span class="s2">.</span><span class="s1">getProductId</span><span class="s2">());</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">product </span><span class="s2">!= </span><span class="s0">null</span><span class="s2">) {</span>
+                <span class="s1">total </span><span class="s2">+= </span><span class="s1">product</span><span class="s2">.</span><span class="s1">getPrice</span><span class="s2">() * </span><span class="s1">item</span><span class="s2">.</span><span class="s1">getQuantity</span><span class="s2">();</span>
+                <span class="s1">Label productLabel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Label</span><span class="s2">(</span><span class="s3">&quot;Product: &quot; </span><span class="s2">+ </span><span class="s1">product</span><span class="s2">.</span><span class="s1">getName</span><span class="s2">());</span>
+                <span class="s1">Label quantityLabel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Label</span><span class="s2">(</span><span class="s3">&quot;Quantity: &quot; </span><span class="s2">+ </span><span class="s1">item</span><span class="s2">.</span><span class="s1">getQuantity</span><span class="s2">());</span>
+                <span class="s1">Label priceLabel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Label</span><span class="s2">(</span><span class="s3">&quot;Price: $&quot; </span><span class="s2">+ (</span><span class="s1">product</span><span class="s2">.</span><span class="s1">getPrice</span><span class="s2">() * </span><span class="s1">item</span><span class="s2">.</span><span class="s1">getQuantity</span><span class="s2">()));</span>
+
+                <span class="s1">productLabel</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s1">Font</span><span class="s2">.</span><span class="s1">font</span><span class="s2">(</span><span class="s3">&quot;TimesNewRoman&quot;</span><span class="s2">,</span><span class="s1">FontWeight</span><span class="s2">.</span><span class="s1">NORMAL</span><span class="s2">,</span><span class="s4">14</span><span class="s2">));</span>
+                <span class="s1">quantityLabel</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s1">Font</span><span class="s2">.</span><span class="s1">font</span><span class="s2">(</span><span class="s3">&quot;TimesNewRoman&quot;</span><span class="s2">,</span><span class="s1">FontWeight</span><span class="s2">.</span><span class="s1">NORMAL</span><span class="s2">,</span><span class="s4">14</span><span class="s2">));</span>
+                <span class="s1">priceLabel</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s1">Font</span><span class="s2">.</span><span class="s1">font</span><span class="s2">(</span><span class="s3">&quot;TimesNewRoman&quot;</span><span class="s2">,</span><span class="s1">FontWeight</span><span class="s2">.</span><span class="s1">NORMAL</span><span class="s2">,</span><span class="s4">14</span><span class="s2">));</span>
+
+                <span class="s1">vbox</span><span class="s2">.</span><span class="s1">getChildren</span><span class="s2">().</span><span class="s1">addAll</span><span class="s2">(</span><span class="s1">productLabel</span><span class="s2">, </span><span class="s1">quantityLabel</span><span class="s2">, </span><span class="s1">priceLabel</span><span class="s2">, </span><span class="s0">new </span><span class="s1">Label</span><span class="s2">(</span><span class="s3">&quot;&quot;</span><span class="s2">));</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+
+        <span class="s1">Label totalLabel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Label</span><span class="s2">(</span><span class="s3">&quot;Total: $&quot; </span><span class="s2">+ </span><span class="s1">total</span><span class="s2">);</span>
+        <span class="s1">totalLabel</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s1">Font</span><span class="s2">.</span><span class="s1">font</span><span class="s2">(</span><span class="s3">&quot;TimesNewRoman&quot;</span><span class="s2">,</span><span class="s1">FontWeight</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">,</span><span class="s4">16</span><span class="s2">));</span>
+        <span class="s1">vbox</span><span class="s2">.</span><span class="s1">getChildren</span><span class="s2">().</span><span class="s1">add</span><span class="s2">(</span><span class="s1">totalLabel</span><span class="s2">);</span>
+
+
+        <span class="s1">Scene scene </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Scene</span><span class="s2">(</span><span class="s1">vbox</span><span class="s2">, </span><span class="s4">300</span><span class="s2">, </span><span class="s4">400</span><span class="s2">);</span>
+        <span class="s1">Stage receiptStage </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Stage</span><span class="s2">();</span>
+        <span class="s1">receiptStage</span><span class="s2">.</span><span class="s1">setTitle</span><span class="s2">(</span><span class="s3">&quot;Receipt&quot;</span><span class="s2">);</span>
+        <span class="s1">receiptStage</span><span class="s2">.</span><span class="s1">setScene</span><span class="s2">(</span><span class="s1">scene</span><span class="s2">);</span>
+        <span class="s1">receiptStage</span><span class="s2">.</span><span class="s1">show</span><span class="s2">();</span>
+    <span class="s2">}</span>
+
+
+    <span class="s0">private void </span><span class="s1">showAlert</span><span class="s2">(</span><span class="s1">Alert</span><span class="s2">.</span><span class="s1">AlertType type</span><span class="s2">, </span><span class="s1">String title</span><span class="s2">, </span><span class="s1">String message</span><span class="s2">) {</span>
+        <span class="s1">Alert alert </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Alert</span><span class="s2">(</span><span class="s1">type</span><span class="s2">);</span>
+        <span class="s1">alert</span><span class="s2">.</span><span class="s1">setTitle</span><span class="s2">(</span><span class="s1">title</span><span class="s2">);</span>
+        <span class="s1">alert</span><span class="s2">.</span><span class="s1">setHeaderText</span><span class="s2">(</span><span class="s0">null</span><span class="s2">);</span>
+        <span class="s1">alert</span><span class="s2">.</span><span class="s1">setContentText</span><span class="s2">(</span><span class="s1">message</span><span class="s2">);</span>
+        <span class="s1">alert</span><span class="s2">.</span><span class="s1">showAndWait</span><span class="s2">();</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public static void </span><span class="s1">main</span><span class="s2">(</span><span class="s1">String</span><span class="s2">[] </span><span class="s1">args</span><span class="s2">) {</span>
+        <span class="s1">launch</span><span class="s2">(</span><span class="s1">args</span><span class="s2">);</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+
+
+<span class="s0">class </span><span class="s1">Product </span><span class="s2">{</span>
+    <span class="s0">private </span><span class="s1">String id</span><span class="s2">;</span>
+    <span class="s0">private </span><span class="s1">String name</span><span class="s2">;</span>
+    <span class="s0">private double </span><span class="s1">price</span><span class="s2">;</span>
+    <span class="s0">private </span><span class="s1">String imagePath</span><span class="s2">;</span>
+
+    <span class="s0">public </span><span class="s1">Product</span><span class="s2">(</span><span class="s1">String id</span><span class="s2">, </span><span class="s1">String name</span><span class="s2">, </span><span class="s0">double </span><span class="s1">price</span><span class="s2">, </span><span class="s1">String imagePath</span><span class="s2">) {</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">id </span><span class="s2">= </span><span class="s1">id</span><span class="s2">;</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">name </span><span class="s2">= </span><span class="s1">name</span><span class="s2">;</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">price </span><span class="s2">= </span><span class="s1">price</span><span class="s2">;</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">imagePath </span><span class="s2">= </span><span class="s1">imagePath</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public </span><span class="s1">String getId</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s1">id</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public </span><span class="s1">String getName</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s1">name</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public double </span><span class="s1">getPrice</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s1">price</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public </span><span class="s1">String getImagePath</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s1">imagePath</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+<span class="s2">}</span>
+
+
+<span class="s0">class </span><span class="s1">CartItem </span><span class="s2">{</span>
+    <span class="s0">private </span><span class="s1">String productId</span><span class="s2">;</span>
+    <span class="s0">private int </span><span class="s1">quantity</span><span class="s2">;</span>
+
+    <span class="s0">public </span><span class="s1">CartItem</span><span class="s2">(</span><span class="s1">String productId</span><span class="s2">, </span><span class="s0">int </span><span class="s1">quantity</span><span class="s2">) {</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">productId </span><span class="s2">= </span><span class="s1">productId</span><span class="s2">;</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">quantity </span><span class="s2">= </span><span class="s1">quantity</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public </span><span class="s1">String getProductId</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s1">productId</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public int </span><span class="s1">getQuantity</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s1">quantity</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+<span class="s2">}</span>
+</pre>
+</body>
+</html>
